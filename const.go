@@ -1,0 +1,127 @@
+package sftpd
+
+import "strconv"
+
+const (
+	SSH_FXP_INIT           = 1
+	SSH_FXP_VERSION        = 2
+	SSH_FXP_OPEN           = 3
+	SSH_FXP_CLOSE          = 4
+	SSH_FXP_READ           = 5
+	SSH_FXP_WRITE          = 6
+	SSH_FXP_LSTAT          = 7
+	SSH_FXP_FSTAT          = 8
+	SSH_FXP_SETSTAT        = 9
+	SSH_FXP_FSETSTAT       = 10
+	SSH_FXP_OPENDIR        = 11
+	SSH_FXP_READDIR        = 12
+	SSH_FXP_REMOVE         = 13
+	SSH_FXP_MKDIR          = 14
+	SSH_FXP_RMDIR          = 15
+	SSH_FXP_REALPATH       = 16
+	SSH_FXP_STAT           = 17
+	SSH_FXP_RENAME         = 18
+	SSH_FXP_READLINK       = 19
+	SSH_FXP_SYMLINK        = 20
+	SSH_FXP_STATUS         = 101
+	SSH_FXP_HANDLE         = 102
+	SSH_FXP_DATA           = 103
+	SSH_FXP_NAME           = 104
+	SSH_FXP_ATTRS          = 105
+	SSH_FXP_EXTENDED       = 200
+	SSH_FXP_EXTENDED_REPLY = 201
+)
+
+const (
+	SSH_FX_OK                = 0
+	SSH_FX_EOF               = 1
+	SSH_FX_NO_SUCH_FILE      = 2
+	SSH_FX_PERMISSION_DENIED = 3
+	SSH_FX_FAILURE           = 4
+	SSH_FX_BAD_MESSAGE       = 5
+	SSH_FX_NO_CONNECTION     = 6
+	SSH_FX_CONNECTION_LOST   = 7
+	SSH_FX_OP_UNSUPPORTED    = 8
+)
+
+const (
+	SSH_FILEXFER_ATTR_SIZE        = 0x00000001
+	SSH_FILEXFER_ATTR_UIDGID      = 0x00000002
+	SSH_FILEXFER_ATTR_PERMISSIONS = 0x00000004
+	SSH_FILEXFER_ATTR_ACMODTIME   = 0x00000008
+	SSH_FILEXFER_ATTR_EXTENDED    = 0x80000000
+)
+
+// sftp 协议中规定文件读写模式
+const (
+	SSH_FXF_READ = 0x00000001
+	SSH_FXF_WRITE = 0x00000002
+	SSH_FXF_APPEND = 0x00000004
+	SSH_FXF_CREAT = 0x00000008
+	SSH_FXF_TRUNC = 0x00000010
+	SSH_FXF_EXCL = 0x00000020
+)
+
+const S_IFMT = 0xf000
+
+// These are used to get more pretty debugging output.
+type SSH_FXP byte
+type SSH_FX byte
+
+func (b SSH_FXP) String() string {
+	s := SSH_FXP_MAP[b]
+	if s == "" {
+		s = "INVALID:" + strconv.Itoa(int(b))
+	}
+	return s
+}
+
+var SSH_FXP_MAP = map[SSH_FXP]string{
+	SSH_FXP_INIT:           `SSH_FXP_INIT`,
+	SSH_FXP_VERSION:        `SSH_FXP_VERSION`,
+	SSH_FXP_OPEN:           `SSH_FXP_OPEN`,
+	SSH_FXP_CLOSE:          `SSH_FXP_CLOSE`,
+	SSH_FXP_READ:           `SSH_FXP_READ`,
+	SSH_FXP_WRITE:          `SSH_FXP_WRITE`,
+	SSH_FXP_LSTAT:          `SSH_FXP_LSTAT`,
+	SSH_FXP_FSTAT:          `SSH_FXP_FSTAT`,
+	SSH_FXP_SETSTAT:        `SSH_FXP_SETSTAT`,
+	SSH_FXP_FSETSTAT:       `SSH_FXP_FSETSTAT`,
+	SSH_FXP_OPENDIR:        `SSH_FXP_OPENDIR`,
+	SSH_FXP_READDIR:        `SSH_FXP_READDIR`,
+	SSH_FXP_REMOVE:         `SSH_FXP_REMOVE`,
+	SSH_FXP_MKDIR:          `SSH_FXP_MKDIR`,
+	SSH_FXP_RMDIR:          `SSH_FXP_RMDIR`,
+	SSH_FXP_REALPATH:       `SSH_FXP_REALPATH`,
+	SSH_FXP_STAT:           `SSH_FXP_STAT`,
+	SSH_FXP_RENAME:         `SSH_FXP_RENAME`,
+	SSH_FXP_READLINK:       `SSH_FXP_READLINK`,
+	SSH_FXP_SYMLINK:        `SSH_FXP_SYMLINK`,
+	SSH_FXP_STATUS:         `SSH_FXP_STATUS`,
+	SSH_FXP_HANDLE:         `SSH_FXP_HANDLE`,
+	SSH_FXP_DATA:           `SSH_FXP_DATA`,
+	SSH_FXP_NAME:           `SSH_FXP_NAME`,
+	SSH_FXP_ATTRS:          `SSH_FXP_ATTRS`,
+	SSH_FXP_EXTENDED:       `SSH_FXP_EXTENDED`,
+	SSH_FXP_EXTENDED_REPLY: `SSH_FXP_EXTENDED_REPLY`,
+}
+
+func (b SSH_FX) String() string {
+	s := SSH_FX_MAP[b]
+	if s == "" {
+		s = "INVALID"
+	}
+	return s
+}
+
+var SSH_FX_MAP = map[SSH_FX]string{
+	SSH_FX_OK:                `SSH_FX_OK`,
+	SSH_FX_EOF:               `SSH_FX_EOF`,
+	SSH_FX_NO_SUCH_FILE:      `SSH_FX_NO_SUCH_FILE`,
+	SSH_FX_PERMISSION_DENIED: `SSH_FX_PERMISSION_DENIED`,
+	SSH_FX_FAILURE:           `SSH_FX_FAILURE`,
+	SSH_FX_BAD_MESSAGE:       `SSH_FX_BAD_MESSAGE`,
+	SSH_FX_NO_CONNECTION:     `SSH_FX_NO_CONNECTION`,
+	SSH_FX_CONNECTION_LOST:   `SSH_FX_CONNECTION_LOST`,
+	SSH_FX_OP_UNSUPPORTED:    `SSH_FX_OP_UNSUPPORTED`,
+}
